@@ -1,8 +1,6 @@
 ---
 title: "Weak Law of Large Numbers"
-output:
-      html_document:
-        keep_md: true
+output: flexdashboard::flex_dashboard
 runtime: shiny
 ---
 
