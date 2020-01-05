@@ -1,0 +1,565 @@
+---
+title: "Computer practical 9 and 10"
+author: 'Professor Philip Brainard '
+date: '2019-01-30'
+output:
+  pdf_document:
+    citation_package: natbib
+    fig_caption: yes
+    fig_height: 5
+    fig_width: 6
+    highlight: tango
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+  word_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+header-includes: \usepackage{float}  \usepackage{subfig}
+subtitle: Supplementary material Statistics 1 (term 2)
+bibliography: citations.bib
+---
+
+
+
+
+---
+
+---
+
+> Notice:
+> 
+> This document contains material which is not examinable for Statistics 1.
+>
+> The only purpose of this document is to provide with an Rmarkdown 
+> templete those interested in becoming familiar with Rmarkdown. This 
+> document does not aim at introducing new statistical concepts that 
+> will be examined. 
+> 
+> Students are not required to learn, or understand the statistical 
+> concepts or methods mentioned in this document. The statistical 
+> concepts introduced in Section 2, are for the sake of presentation 
+> and only.   
+>
+> Rmarkdown is not examinable concept, however, students can use it, 
+> if they want in order to produce reports or present data analysis 
+> results. 
+
+<!-- The following is an R chunck -->
+<!-- The options "{r setup, include=FALSE}" mean the following: -->
+<!-- ..."r": this is an R chunk,  -->
+<!-- ..."include=FALSE": do not print the output of the chunck. -->
+
+<!-- A list of available R-chuncks options can be found in -->
+<!-- https://yihui.name/knitr/options/#chunk_options -->
+
+<!-- Now, inside the R-chunck: -->
+<!-- ..."rm(list=ls())": removes/deletes all the previous variables in R global environment -->
+<!-- ..."knitr::opts_chunk$set(echo = TRUE)": forces all the R-chuncks below to have a default option  "echo = TRUE". -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<!-- The following draws a separator -->
+
+---
+
+<!-- Sections start with "#" followed by the name of the section -->
+
+# First contact  
+
+<!-- Hyperlinks are created using the syntax "[text](link)" -->
+
+[[R Markdown]](http://rmarkdown.rstudio.com)  is a great way to create dynamic documents with embedded chunks of R code.  It produces fully interactive documents that allow the readers to change the parameters underlying the analysis, and see the results immediately. It is be self contained and fully reproducible which makes it very easy to share. 
+
+Here, we provide a simple templete to start with. There are several cheat sheets briefly representing the commands and syntax of R-markdown, some of them are: 
+
++ R-markdown reference: [[Click here]](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
++ Cheat sheet about r-markdown: [[Click here]](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
++ Cheat sheet about R: [[Click here]](http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf)
+
+More details can be found in  [@Rmarkdown], an online book which is available from [[here]](https://bookdown.org/yihui/rmarkdown/). In particular, Sections [1](https://bookdown.org/yihui/rmarkdown/installation.html), [2](https://bookdown.org/yihui/rmarkdown/basics.html), and [3](https://bookdown.org/yihui/rmarkdown/documents.html) are quite interesting.
+
+## Practice
+
+### Let's practice a lillte bit.
+
+Try executing the chunk below by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+The user to specify how the chunk will be executed, or how its output will be presented, by setting the appropriate flags inside {r, ...}. 
+
+<!-- Following chunk: -->
+
+<!-- It executes the R commands inside the chunks-->
+
+<!-- "echo=TRUE"   : print the content of the R chunk -->
+
+<!-- "fig.width=6"  : set width of the figure -->
+
+<!-- "fig.height=4" : set height of the figure -->
+
+<!-- "fig.cap"      : set mane of the figure -->
+
+<!-- "fig.pos="H"" : place the figure right here, and do not automatically decide -->
+
+<!-- "\\label{fig:figs}" : label the figure so that you can use it as a reference -->
+
+
+```{r, include=TRUE, echo=TRUE, fig.pos="H", fig.width=6, fig.height=4, fig.cap="\\label{fig:figs}The histogram of values generated from a standard normal distribution"}
+x <- rnorm(100, 0, 1)
+x2_mean = mean(x^2)
+hist( x )
+```
+
+<!-- "\ref{fig:figs}"    : reference the figure,  -->
+
+In Figure \ref{fig:figs}, we present a histogram of random values drawn from Normal distribution
+
+Inline r code can run by typing `r log10(100)`, and `r x2_mean` .Now see what it is print in the produced PDF.
+
+You can create a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+
+### Let's practice a lillte more.
+
+Some times if your dataset is in the form of a `data.frame`, it can be nicely tabulated in the output document by using the function  `knitr::kable()`. For instance, the following R-chunk will produce Table \ref{tbl:mtcar}.:
+
+```{r}
+library(knitr)
+knitr::kable( mtcars,
+               caption = "\\label{tbl:mtcar}The data-set ntcars")
+```
+
+Also, you can plot several sub-figures, with captions, the follwoing way. Please pay attention to the options specified in the R-chunk below. These options can produce the sub-titles of the sub-figures.
+
+
+```{r, include=TRUE, echo=TRUE, fig.pos="H", fig.width=4, fig.height=3, fig.ncol = 2, fig.cap="\\label{fig:mtcarscapt}Some plots", fig.subcap=c("\\label{fig:scaterplot}A scatter plot", "\\label{fig:boxplot}A box plot")} 
+plot( mtcars$hp, 
+      mtcars$mpg,
+      xlab = "Gross horsepower",
+      ylab = "Miles/(US) gallon",
+      main = " ",
+      type ="p")
+boxplot(mtcars$mpg ~ mtcars$cyl,
+        xlab="Number of cylinders",
+        ylabs="Miles/(US) gallon")
+
+```
+
+
+<!-- The follwoing starts a new page -->
+
+\newpage
+
+# Example: Discovering cheating while maintaining privacy 
+
+Professor Philip Brainard (Medfield College) was interested in learning the rate of the students cheated in a recent exam test in chemistry. Obviously, he could not just ask his students 
+
+> Did you cheat on the test?
+
+because a number of students might not be that honest with  their responses. In fact, it would introduce a bias: the true rate is less than your observed rate, (cheaters may reply NO, and not-cheater would of course never reply YES). 
+
+To infer proportions of cheaters, while also maintaining the privacy of the population, he thought the following procedure.  
+
+***Privacy Algorithm  [@davidson2015probabilistic]***
+
+1. Have the user privately flip a coin. If heads, answer "Did you cheat?"truthfully.  
+2. If tails, flip again. If heads, answer "Yes" regardless of the truth; if tails, answer "No".  
+
+This way, Prof Brainard would not know whether a cheating confession is a result of cheating or a heads on the second coin flip. One could of course argue that the interviewers are still receiving false data since some Yes's are not confessions but instead randomness. However, this way the systematic data generation process that can be modeled. Furthermore, they do not have to incorporate (perhaps somewhat naively) the possibility of deceitful answers. 
+
+## The experiment
+
+The experiment is performed as follows:
+
+> In the interview process for each student, the student flips a coin, hidden from the interviewer. The student agrees to answer honestly if the coin comes up heads. Otherwise, if the coin comes up tails, the student (secretly) flips the coin again, and answers "Yes, I did cheat" if the coin flip lands heads, and "No, I did not cheat", if the coin flip lands tails. This way, the interviewer does not know if a "Yes" was the result of a guilty plea, or a Heads on a second coin toss. Thus privacy is preserved and the researchers receive honest answers.
+
+Table \ref{tbl:dataobs} presents the data collected. Our sample size is $n=100$, and we have $x=35$ positive responses.
+
+|Positive|Negative|Total|
+|--------|--------|-----|
+| 35     |   65   | 100 |
+Table: \label{tbl:dataobs}The responses of the students collected by using the privacy algorithm.
+
+
+```{r, include=FALSE, echo=FALSE}
+n.obs <- 100 # number of students
+x.obs <- 35  # number of positive responses
+```
+
+
+## Sampling distribution
+
+Let $Y_{i}$ be the response of the $i$-th student with 
+$$
+Y
+=
+\begin{cases}
+1 & \text{, positive} \\
+0 & \text{, negative}
+\end{cases}
+$$
+let $C_{1}$ be the output of the first coin with 
+$$
+C_{1}
+=
+\begin{cases}
+1 & \text{, Head} \\
+0 & \text{, Tail}
+\end{cases}
+$$
+and let $C_{2}$ be the output of the second coin with 
+$$
+C_{2}
+=
+\begin{cases}
+1 & \text{, Head} \\
+0 & \text{, Tail}
+\end{cases}
+$$
+
+Let $p\in[0,1]$ be the proportion of cheaters in the exam. Then the probability that a student gives a positive response is
+
+\begin{align}
+P(Y=1) 
+=&
+P(C_1=1)p + P(C_1=0)P(C_2=1) \\
+=&
+\frac{1}{2}p+\frac{1}{2} \frac{1}{2} \\
+=&
+\frac{1}{2}p+\frac{1}{4}
+\end{align}
+and the probability that a student gives a negative response 
+\begin{align}
+P(Y=0) 
+=&
+1-P(Y=1)  \\
+=&
+\frac{3}{4} - \frac{1}{2}p
+\end{align}
+
+
+
+Therefore for the sample $\{Y_1,...,Y_n\}$, the sample distribution is 
+$$
+Y_{i} \sim \text{Bernoulli}(\frac{1}{2}p+\frac{1}{4}), \ \ \text{for} \ i=1,...,n
+$$
+and hence
+\begin{align}
+\label{eq:sampledistr}
+P(Y_{1:n}|p)
+=&
+\prod_{i=1}^{n}
+  (\frac{1}{2}p+\frac{1}{4})^{y_{i}}
+  (\frac{3}{4}-\frac{1}{2}p)^{1-y_{i}} \\
+  =&
+  (\frac{1}{2}p+\frac{1}{4})^{x}
+  (\frac{3}{4}-\frac{1}{2}p)^{n-x} \\
+\end{align}
+
+where $X=\sum_{i=1}^{n}Y_{i}$.
+
+```{r, include=FALSE, echo=FALSE}
+lik.fun <- function(p , x=x.obs , n=n.obs ) {
+  pracc <- p/2+1/4
+  pr <- (pracc^x) * ((1-pracc)^(n-x))
+  return(pr)
+}
+```
+
+To learn the proportion of cheaters $p\in[0,1]$, one can use the  Bayes theorem, and invert the probability \ref{eq:sampledistr}.  For thease reason, we need to specify a prior probability distribution for $p$.
+
+We assign a Beta prior distribution on $p$, $p\sim\text{Beta}(a,b)$, with density 
+
+$$
+f(p|a,b)=\frac{1}{B(a,b)}\int_{0}^{1}p^{1-a}(1-p)^{1-b}dp
+$$
+
+Because Prof Brainard had no prior knowledge whether his students tend to cheat or not (they were 1st year students) he chooses prior hyper-parameters $a$ and $b$ which give prior whose density/concentration is uniformly distributed in the interval $[0,1]$. Figure \ref{fig:pdfsp} presents the shapes of the prior densities for different combinations of $a$ and $b$. Hence, a priori ignotance can be expressed with $(a,b)=(1,1)$.
+
+
+```{r, include=FALSE, echo=FALSE}
+a.fix <- 1.0
+b.fix <- 1.0
+```
+
+
+```{r, include=FALSE, echo=FALSE}
+prior.pdf <- function (p , a=a.fix , b=b.fix ) {
+  pr <- dbeta(p,a,b)
+  return(pr)
+}
+```
+
+
+```{r, include=FALSE, echo=FALSE}
+ab.fix.choices <- rbind( c(0.2,0.2),
+                        c(0.2,0.8),
+                        c(2.0,3.0),
+                        c(3.0,2.0),
+                        c(1.0,1.0),
+                        c(2.0,2.0))
+```
+
+
+```{r, echo=FALSE, fig.pos="H", fig.width=2.5, fig.height=2.5, fig.ncol = 3, fig.cap="\\label{fig:pdfsp}Beta prior distribution density functions for p, denoted as Beta(a,b)", fig.subcap=c("\\label{fig:prior}Beta(0.2,0.2)", "\\label{fig:prior}Beta(0.2,0.8)", "\\label{fig:prior} Beta(2.0,3.0)", "\\label{fig:prior}Beta(3.0,2.0)", "\\label{fig:prior}Beta(1.0,1.0)", "\\label{fig:prior}Beta(2.0,2.0)")} 
+
+for (ii in 1:6) {
+
+  a <- ab.fix.choices[ii,1]
+  b <- ab.fix.choices[ii,2]
+  
+  
+  pvec <- seq(from=0.0, to=1.0, length.out = 100.0)
+  prior.pdf.vec <- rep(0.0,times=100)
+  for (i in 1:100) {
+    prior.pdf.vec[i] <- prior.pdf(pvec[i], a , b )
+  }
+
+  plot( pvec,
+        prior.pdf.vec,
+        xlab="value of p",
+        ylab="density",
+        main=" ",
+        type="l",
+        cex.lab=0.8, 
+        cex.axis=0.8, 
+        cex.main=0.8, 
+        cex.sub=0.8)
+  
+  }
+
+```
+
+
+According to the Bayes theorem, the posterior probability distribution of $p$ given the observations has density 
+
+\begin{align*}
+f(p|Y_{1:n},a,b) 
+=&
+\frac
+    {\prod_{i=1}^{n}P(Y_{i}=y_{i}|p)f(p|a,b)}
+    {\int_{0}^{1}\prod_{i=1}^{n}P(Y_{i}=y_{i}|p)f(p|a,b) dp} \\
+=&
+\frac
+    { (\frac{1}{2}p+\frac{1}{4})^{x} (\frac{3}{4} - \frac{1}{2}p)^{n-x}  p^{a-1}(1-p)^{b-1}}
+    {\int_{0}^{1}(\frac{1}{2}p+\frac{1}{4} )^{x} (\frac{3}{4} - \frac{1}{2}p)^{n-x}  p^{a-1}(1-p)^{b-1} dp}
+\end{align*}
+
+
+```{r, include=FALSE, echo=FALSE}
+post.pdf <- function(p , a=a.fix , b=b.fix , x=x.obs , n=n.obs ) {
+  temp.fun <- function(pp , aa=a , bb=b , xx=x , nn=n ) {
+    pr <- lik.fun(pp,xx,nn) * prior.pdf(p,aa,bb)
+  }
+  const <- integrate(temp.fun, lower=0.001, upper=0.99)
+  pr <- lik.fun(p,x,n) * prior.pdf(p,a,b) / const$value
+  return(pr)
+}
+```
+
+The density of the posterior distribution of $p$ is presented in Figure \ref{fig:pdfsp}.
+
+```{r, include=FALSE, echo=FALSE}
+pvec <- seq(from=0.0, to=1.0, length.out = 100.0)
+post.pdf.vec <- rep(0.0,times=100)
+for (i in 1:100) {
+  post.pdf.vec[i] <- post.pdf(pvec[i])
+}
+```
+
+
+```{r, echo=FALSE, fig.pos="H", fig.width=7, fig.height=5, fig.ncol = 2, fig.cap="\\label{fig:pdfsp}Density functions for p",fig.align = "center"} 
+pvec <- seq(from=0.0, to=1.0, length.out = 100.0)
+
+post.pdf.vec <- rep(0.0,times=100)
+for (i in 1:100) {
+  post.pdf.vec[i] <- post.pdf(pvec[i])
+}
+
+plot( pvec,
+      post.pdf.vec,
+      xlab="value of p",
+      ylab="density",
+        type="l",
+        cex.lab=0.8, 
+        cex.axis=0.8, 
+        cex.main=0.8, 
+        cex.sub=0.8)
+
+
+prior.pdf.vec <- rep(0.0,times=100)
+for (i in 1:100) {
+  prior.pdf.vec[i] <- prior.pdf(pvec[i])
+}
+
+  lines(pvec,
+        prior.pdf.vec,
+      xlab="value of p",
+      ylab="density",
+      col="blue",
+        cex.lab=0.8, 
+        cex.axis=0.8, 
+        cex.main=0.8, 
+        cex.sub=0.8
+        )
+
+  legend("topright",
+         title="distributions:",
+         lty = c(1,1),
+         col = c("black","blue"),
+         legend=c("posterior","prior")
+         )
+  
+
+```
+
+
+The posterior expected value of the probability that a student cheat is 
+$$
+E(p|Y_{1:n},a,b) = \int_{0}^{1} p f(p|Y_{1:n},a,b) dp 
+$$
+with standard error
+$$
+SD(p|Y_{1:n},a,b) = \sqrt{E(p^2|Y_{1:n},a,b)-E(p|Y_{1:n},a,b)^2 }
+$$
+with $E(p^2|Y_{1:n},a,b) = \int_{0}^{1} p^2 f(p|Y_{1:n},a,b) dp$.
+
+
+
+
+```{r, echo=FALSE, include=FALSE}
+prior.exp <- function(a,b) {
+  ee <- a/(a+b)
+  return(ee)
+}
+prior.se <- function(a,b) {
+  ee <- ab/( ((a+b)^2) *(a+b+1))
+  return(ee)
+}
+
+post.exp <- function(a=a.fix , b=b.fix , x=x.obs , n=n.obs) {
+  temp.fun <- function(pp, aa=a, bb=b, xx=x, nn=n) {
+    ff <- pp*post.pdf(pp , aa , bb , xx , nn)
+    return(ff)
+  }
+  ee <- integrate(temp.fun, lower=0.001, upper=0.99)$value
+  return(ee)
+}
+
+post.exp2 <- function(a=a.fix , b=b.fix , x=x.obs , n=n.obs) {
+  temp.fun <- function(pp, aa=a, bb=b, xx=x, nn=n) {
+    ff <- (pp^2)*post.pdf(pp , aa , bb , xx , nn)
+    return(ff)
+  }
+  ee <- integrate(temp.fun, lower=0.001, upper=0.99)$value
+  return(ee)
+}
+
+post.var <- function(a=a.fix , b=b.fix , x=x.obs , n=n.obs) {
+  ee <- max(post.exp2(a,b,x,n) -(post.exp(a,b,x,n))^2 , 0.0) # for round-of error
+  return(ee)
+}
+
+post.sd <- function(a=a.fix , b=b.fix , x=x.obs , n=n.obs) {
+  ee <- sqrt(post.var(a,b,x,n))
+  return(ee)
+}
+
+```
+
+
+The posterior expected rate of cheater is $E(p|Y_{1:n},a,b)$ = `r post.exp()`, with standard error $SD(p|Y_{1:n},a,b)$ = `r post.sd()`. 
+
+
+## Sensitivity analysis
+
+We are interested in how sensitive to different values of the hyper-parameters $a$, and $b$, the posterior distribution is. In Figure \ref{fig:pdfsp}, we present posterior distribution densities associated to priors.
+
+
+```{r, echo=FALSE, fig.pos="H", fig.width=2.5, fig.height=2.5, fig.ncol = 3, fig.cap="\\label{fig:pdfsp}POsterior and prior distributions density functions for p, with different prior hyper-parameter values. The prior density is colored in blue, and the posterior density is colored in black.", fig.subcap=c("\\label{fig:prior}Beta(0.2,0.2)", "\\label{fig:prior}Beta(0.2,0.8)", "\\label{fig:prior} Beta(2.0,5.0)", "\\label{fig:prior}Beta(5.0,2.0)", "\\label{fig:prior}Beta(1.0,1.0)", "\\label{fig:prior}Beta(2.0,2.0)")} 
+
+for (ii in 1:6) {
+
+  aa <- ab.fix.choices[ii,1]
+  bb <- ab.fix.choices[ii,2]
+  
+  pvec <- seq(from=0.001, to=0.99, length.out = 100.0)
+
+  post.pdf.vec <- rep(0.0,times=100)
+  for (i in 1:100) {
+    post.pdf.vec[i] <- post.pdf(pvec[i], aa,bb)
+  }
+
+  plot( pvec,
+        post.pdf.vec,
+        xlab="value of p",
+        ylab="density",
+        type="l",
+        cex.lab=0.8, 
+        cex.axis=0.8, 
+        cex.main=0.8, 
+        cex.sub=0.8)
+
+
+  prior.pdf.vec <- rep(0.0,times=100)
+  for (i in 1:100) {
+    prior.pdf.vec[i] <- prior.pdf(pvec[i],
+                                  a=aa,
+                                  b=bb)
+  }
+
+  lines(pvec,
+        prior.pdf.vec,
+        xlab="value of p",
+        ylab="density",
+        col="blue",
+        cex.lab=0.8,
+        cex.axis=0.8,
+        cex.main=0.8,
+        cex.sub=0.8
+        )
+
+# 
+#     legend("topright",
+#            title="distributions:",
+#            lty = c(1,1),
+#            col = c("black","blue"),
+#            legend=c("posterior","prior")
+#            )
+}
+
+```
+
+```{r, echo=FALSE, include=FALSE}
+aa <- ab.fix.choices[,1]
+bb <- ab.fix.choices[,2]
+```
+
+
+In Table \ref{tbl:esttable}, we present the posterior expected value and the standard deviation of $p$, for different values of hyper-parameters $a$, and $b$. We observe that changing the hyper-parameters of the priors can significantly effects the posterior inference.
+
+
+| $a$     | $b$     |  $E(p;a,b)$             |  $SD(p;a,b)$           |
+|:--------|:--------|:-----------------------:|:----------------------:|
+|`r aa[1]`|`r bb[1]`|`r post.exp(aa[1],bb[1])`|`r post.sd(aa[1],bb[1])`|
+|`r aa[2]`|`r bb[2]`|`r post.exp(aa[2],bb[2])`|`r post.sd(aa[2],bb[2])`|
+|`r aa[3]`|`r bb[3]`|`r post.exp(aa[3],bb[3])`|`r post.sd(aa[3],bb[3])`|
+|`r aa[4]`|`r bb[4]`|`r post.exp(aa[4],bb[4])`|`r post.sd(aa[4],bb[4])`|
+|`r aa[5]`|`r bb[5]`|`r post.exp(aa[5],bb[5])`|`r post.sd(aa[5],bb[5])`|
+|`r aa[6]`|`r bb[6]`|`r post.exp(aa[6],bb[6])`|`r post.sd(aa[6],bb[6])`|
+Table: \label{tbl:esttable}The poseterior expected value, and standard deviation of $p$. 
+
+
+
+
+
