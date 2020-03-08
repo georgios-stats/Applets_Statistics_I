@@ -22,6 +22,27 @@ Applets for Statistics I
 R applets for the course Statistics I 
 
 
+## How to run the Web Applets from the server 
+
+You can click on the following links:  
+
++ For the demo regarding the sensitivity / spacificity   
+  * <https://georgios-stats.shinyapps.io/demo_biostatistics_bayes/>
+      
++ For the demo presenting standard distributions  
+  * <https://georgios-stats.shinyapps.io/demo_distributions/>  
+      
++ For the demo presenting Central Limit Theorem  
+
+  * <https://georgios-stats.shinyapps.io/demo_clt/>  
+      
++ For the demo presenting the Weak Law of Large Numbers  
+
+  * <https://georgios-stats.shinyapps.io/demo_wlln/>  
+      
+
+
+These applications are currently uploaded on non-Durham Univertity server, which means that we have only 25 active hours per mounth. If we exceed this limit, you will be able to run these applications localy on your computer by dowlnoaded them. (see below.)
 
 
 
